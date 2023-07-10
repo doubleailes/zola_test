@@ -1,0 +1,23 @@
+name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    container: ghcr.io/doubleailes/rust-docker-nextest:latest
+
+    steps:
+    - uses: dtolnay/rust-toolchain@stable
+    - name: 🔨 Build
+      run: cargo build --verbose
+    - name: ✔️ Tests
+      run: cargo nextest run
